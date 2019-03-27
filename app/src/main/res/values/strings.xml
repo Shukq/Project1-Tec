@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Project1</string>
+    <string name="register">¿Aún no tienes una cuenta?. Registrate.</string>
+    <string name="login">Iniciar Sesión</string>
+</resources>

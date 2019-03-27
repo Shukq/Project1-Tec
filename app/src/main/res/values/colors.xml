@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2f323f</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="primaryLightColor">#585b6a</color>
+    <color name="primaryDarkColor">#070a19</color>
+    <color name="colorAccent">#ffc53c</color>
+    <color name="secondaryDarkColor">#c89500</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+    <color name="fbColor">#506ba2</color>
+    <color name="logInColor">#7172ce</color>
+</resources>
