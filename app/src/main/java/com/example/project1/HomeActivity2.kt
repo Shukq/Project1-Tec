@@ -15,12 +15,16 @@ import kotlinx.android.synthetic.main.app_bar_home2.*
 
 class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var viewPager:ViewPager
+    private lateinit var adapter:adapterPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home2)
         setSupportActionBar(toolbar)
 
+        viewPager = findViewById(R.id.pager)
+        adapter = adapterPager(supportFragmentManager)
+        viewPager.adapter = adapter
 
 
 
