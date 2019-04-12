@@ -3,6 +3,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_list_fragment,container,false);
-        recyclerView = recyclerView.findViewById(R.id.my_recycler_view);
+        recyclerView = view.findViewById(R.id.list);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -32,6 +33,9 @@ public class ListFragment extends Fragment {
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(mDividerItemDecoration);
         ArrayList<Restaurant> myDataset = new ArrayList<>();
         Restaurant res1 = new Restaurant("brbrbr1",12345678);
         Restaurant res2 = new Restaurant("brbrbr2",12345678);
@@ -42,6 +46,8 @@ public class ListFragment extends Fragment {
         // specify an adapter (see also next example)
         mAdapter = new ListAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
+
+
 
 
         return view;

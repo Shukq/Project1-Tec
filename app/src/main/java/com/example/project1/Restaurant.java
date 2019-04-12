@@ -7,6 +7,9 @@ public class Restaurant {
     private int coordX;
     private int coordY;
     private String adress;
+    private int id;
+    private int[] rating;
+    private String[] images;
 
 
     public Restaurant(String name, int number) {
