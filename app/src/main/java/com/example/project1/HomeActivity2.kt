@@ -1,7 +1,6 @@
 package com.example.project1
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.app_bar_home2.*
 class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var viewPager:ViewPager
     private var TAG:String = "MainActivity"
-    private lateinit var mAdapter:Adapter
+    private lateinit var mFragmentAdapter: FragmentAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +24,7 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_home2)
         setSupportActionBar(toolbar)
 
-        mAdapter = Adapter(supportFragmentManager)
+        mFragmentAdapter = FragmentAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.viewpager)
         setupViewPager(viewPager)
         var tabLayout:TabLayout = findViewById(R.id.tabs)
@@ -45,7 +44,7 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     fun setupViewPager(viewPager:ViewPager)
     {
-        val adapter = Adapter(supportFragmentManager)
+        val adapter = FragmentAdapter(supportFragmentManager)
         adapter.addFragment(ListFragment(),"Restaurant List")
         adapter.addFragment(MapFragment(),"Mapa")
         viewPager.adapter = adapter
