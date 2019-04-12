@@ -37,12 +37,7 @@ class ListFragment : Fragment() {
         )
         recyclerView!!.addItemDecoration(mDividerItemDecoration)
         val myDataset = ArrayList<Restaurant>()
-        val res1 = Restaurant("brbrbr1", 12345678)
-        val res2 = Restaurant("brbrbr2", 12345678)
-        val res3 = Restaurant("brbrbr3", 12345678)
-        myDataset.add(res1)
-        myDataset.add(res2)
-        myDataset.add(res3)
+        myDataset.add(Restaurant("1","Mac",12345678,"caro",1,2,"hoy no", mutableListOf<Int>(), mutableListOf<String>()))
         // specify an adapter (see also next example)
         mAdapter = ListAdapter(myDataset){
             val intent = Intent(activity,RestaurantDetailsActivity::class.java)
