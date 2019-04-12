@@ -11,19 +11,11 @@ import android.widget.Toast;
 
 public class MapFragment extends Fragment {
     private static final String TAG = "Mapa";
-    private Button btn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_map_fragment,container,false);
-        btn = (Button) view.findViewById(R.id.btnMapa);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(),"Mapa", Toast.LENGTH_SHORT).show();
-            }
-        });
 
 
         return view;
