@@ -3,6 +3,7 @@ package com.example.project1
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
@@ -15,16 +16,21 @@ import kotlinx.android.synthetic.main.app_bar_home2.*
 
 class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var viewPager:ViewPager
-    private lateinit var adapter:adapterPager
+    private var TAG:String = "MainActivity"
+    private lateinit var mAdapter:Adapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home2)
         setSupportActionBar(toolbar)
 
-        viewPager = findViewById(R.id.pager)
-        adapter = adapterPager(supportFragmentManager)
-        viewPager.adapter = adapter
+        mAdapter = Adapter(supportFragmentManager)
+        viewPager = findViewById(R.id.viewpager)
+        setupViewPager(viewPager)
+        var tabLayout:TabLayout = findViewById(R.id.tabs)
+        tabLayout.setupWithViewPager(viewPager)
+
 
 
 
@@ -35,6 +41,15 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    fun setupViewPager(viewPager:ViewPager)
+    {
+        val adapter = Adapter(supportFragmentManager)
+        adapter.addFragment(ListFragment(),"Restaurant List")
+        adapter.addFragment(MapFragment(),"Mapa")
+        viewPager.adapter = adapter
+
     }
 
     override fun onBackPressed() {
