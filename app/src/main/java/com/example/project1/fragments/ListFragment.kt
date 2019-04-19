@@ -1,4 +1,4 @@
-package com.example.project1
+package com.example.project1.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
+import com.example.project1.activities.RestaurantDetailsActivity
+import com.example.project1.R
+import com.example.project1.api.RetrofitClient
+import com.example.project1.model.Restaurant
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 import java.util.ArrayList
 
@@ -36,14 +41,46 @@ class ListFragment : Fragment() {
             LinearLayoutManager.VERTICAL
         )
         recyclerView!!.addItemDecoration(mDividerItemDecoration)
-        val myDataset = ArrayList<Restaurant>()
-        myDataset.add(Restaurant("1","Mac",12345678,"caro",1,2,"hoy no", mutableListOf<Int>(), mutableListOf<String>()))
+        var myDataset = ArrayList<Restaurant>()
+        RetrofitClient.instance.getRestaurant()
+            .enqueue(object:Callback<ArrayList<Restaurant>>{
+                override fun onFailure(call: Call<ArrayList<Restaurant>>, t: Throwable) {
+                    Log.e("ERROR",t.toString())
+                }
+
+                override fun onResponse(call:Call<ArrayList<Restaurant>>, response: Response<ArrayList<Restaurant>>) {
+
+                    if(response.body()!=null)
+                    {
+                        myDataset = response.body()!!
+                        mAdapter = ListAdapter(myDataset) {
+                            val intent = Intent(activity, RestaurantDetailsActivity::class.java)
+                            startActivity(intent)
+                        }
+                        recyclerView!!.adapter = mAdapter
+                    }
+                }
+
+            })
+
+
+
+
+        /*myDataset.add(
+            Restaurant(
+                "1",
+                "Mac",
+                12345678,
+                "caro",
+                1,
+                2,
+                "hoy no"
+                //mutableListOf<Int>(),
+                //mutableListOf<String>()
+            )
+        )*/
         // specify an adapter (see also next example)
-        mAdapter = ListAdapter(myDataset){
-            val intent = Intent(activity,RestaurantDetailsActivity::class.java)
-            startActivity(intent)
-        }
-        recyclerView!!.adapter = mAdapter
+
 
 
 

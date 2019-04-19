@@ -1,8 +1,9 @@
-package com.example.project1
+package com.example.project1.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import com.example.project1.R
 
 class RestaurantDetailsActivity : AppCompatActivity() {
 

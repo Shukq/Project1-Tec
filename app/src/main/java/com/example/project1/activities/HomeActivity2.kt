@@ -1,4 +1,4 @@
-package com.example.project1
+package com.example.project1.activities
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -10,6 +10,10 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.project1.fragments.FragmentAdapter
+import com.example.project1.fragments.ListFragment
+import com.example.project1.fragments.MapFragment
+import com.example.project1.R
 import kotlinx.android.synthetic.main.activity_home2.*
 import kotlinx.android.synthetic.main.app_bar_home2.*
 
@@ -34,7 +38,9 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()

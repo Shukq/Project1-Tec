@@ -1,4 +1,4 @@
-package com.example.project1.DAO
+package com.example.project1.dao
 
 import android.os.Handler
 import android.os.HandlerThread
