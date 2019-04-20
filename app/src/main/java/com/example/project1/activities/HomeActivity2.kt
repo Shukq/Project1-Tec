@@ -8,8 +8,10 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import com.example.project1.fragments.FragmentAdapter
 import com.example.project1.fragments.ListFragment
 import com.example.project1.fragments.MapFragment
@@ -17,10 +19,14 @@ import com.example.project1.R
 import kotlinx.android.synthetic.main.activity_home2.*
 import kotlinx.android.synthetic.main.app_bar_home2.*
 
+
+
+
 class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var viewPager:ViewPager
     private var TAG:String = "MainActivity"
     private lateinit var mFragmentAdapter: FragmentAdapter
+    private var email = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,12 +41,17 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         tabLayout.setupWithViewPager(viewPager)
 
 
+        email = this.intent.getStringExtra("email")
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        val headerView = navigationView.getHeaderView(0)
+        val navUsername = headerView.findViewById(R.id.txt_email_nav) as TextView
+        navUsername.text = email
 
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
+            com.example.project1.R.string.navigation_drawer_open,
+            com.example.project1.R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -96,10 +107,32 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        when (item.itemId) {
+        if(item.itemId==R.id.nav_exit)
+        {
+            Log.i("werwer","ewrew")
+        }
+        when(item.itemId) {
 
             R.id.nav_exit -> {
+                Log.e("HALP","HALP2")
+                val dialogBack = AlertDialog.Builder(this)
+                dialogBack.setTitle("Exit")
+                dialogBack.setMessage("Do you want to close session?")
+                dialogBack.setPositiveButton("Yes"){
+                        dialog,_ ->
+                    dialog.dismiss()
+                    finish()
+                    }
+                dialogBack.setNegativeButton("No"){
+                        dialog,_ ->
+                    dialog.dismiss()
+                }
+                val d = dialogBack.create()
+                d.show()
+            }
 
+            R.id.nav_add -> {
+                Log.e("TORUPLOX","STAHP")
             }
 
         }

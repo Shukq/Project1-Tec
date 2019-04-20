@@ -58,7 +58,7 @@
                 android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_user"/>
+                android:id="@+id/txt_user" android:text="nacho@gmail.com"/>
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
             android:hint="Password"
@@ -77,7 +77,7 @@
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_pass"/>
+                android:id="@+id/txt_pass" android:text="123"/>
     </android.support.design.widget.TextInputLayout>
     <Button
             android:background="@drawable/button_log_in"

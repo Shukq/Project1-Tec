@@ -3,7 +3,10 @@ package com.example.project1.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PatternMatcher
+import android.text.Editable
 import android.util.Log
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -11,17 +14,18 @@ import com.example.project1.api.RetrofitClient
 import com.example.project1.R
 import com.example.project1.model.DefaultResponse
 import com.example.project1.model.User
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
     private  var btn_register : Button?= null
     private  var txt_user : EditText?= null
     private  var txt_pass : EditText?= null
     private var txt_confirm : EditText?= null
-    private var user = ""
-    private var pass = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,59 +36,55 @@ class SignUpActivity : AppCompatActivity() {
         txt_confirm = findViewById(R.id.txt_pass_confirmation)
 
         btn_register?.setOnClickListener {
-            validate()
+            createUser()
         }
 
+
     }
 
-    private fun validate()
-    {
-        val email = txt_user?.text.toString()
-        val pass = txt_pass?.text.toString()
-        createUser()
-
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-    }
 
     private fun createUser()
     {
-        val email = txt_user?.text.toString().trim()
-        val password = txt_pass?.text.toString().trim()
-        Log.i("email",email)
-        Log.i("pass",password)
-        if(email.isEmpty())
+        val email = txt_SignUp_User?.text.toString().trim()
+        val password = txt_SignUp_Pass?.text.toString()
+        val confirm = txt_pass_confirmation?.text.toString()
+        if(email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.isNotEmpty()&& password == confirm)
         {
-            txt_user!!.error = "Email required"
-            txt_user!!.requestFocus()
-            return
+            val hash:HashMap<String,Any> = hashMapOf()
+            hash.set("email",email)
+            hash.set("password",password)
+
+            RetrofitClient.instance.createUser(hash)
+                .enqueue(object: Callback<DefaultResponse>{
+                    override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+                        Toast.makeText(this@SignUpActivity,"User not created",Toast.LENGTH_LONG).show()
+                    }
+
+                    override fun onResponse(call: Call<DefaultResponse>, response: Response<DefaultResponse>) {
+                        if(response.isSuccessful)
+                        {
+                            Toast.makeText(this@SignUpActivity,"User created",Toast.LENGTH_LONG).show()
+                            val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        else
+                        {
+                            Toast.makeText(this@SignUpActivity,"User already exists!",Toast.LENGTH_LONG).show()
+                            txt_user?.text = Editable.Factory.getInstance().newEditable("")
+                            txt_pass?.text = Editable.Factory.getInstance().newEditable("")
+                            txt_confirm?.text = Editable.Factory.getInstance().newEditable("")
+                        }
+
+                    }
+
+
+                })
         }
-        if(password.isEmpty())
+        else
         {
-            txt_pass!!.error = "Password required"
-            txt_pass!!.requestFocus()
-            return
+            Toast.makeText(this,"Check your credentials",Toast.LENGTH_LONG).show()
         }
-        val hash:HashMap<String,Any> = hashMapOf()
-        hash.set("email",email)
-        hash.set("password",password)
-
-        RetrofitClient.instance.createUser(hash)
-            .enqueue(object: Callback<DefaultResponse>{
-                override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
-                    Log.e("ERROR",t.message)
-                }
-
-                override fun onResponse(call: Call<DefaultResponse>, response: Response<DefaultResponse>) {
-                    Log.i("Codigo",response.code().toString())
-                    Log.i("CALL",call.request().toString())
-                    Log.i("CALL2",call.request().body().toString())
-                    Log.i("RESPONSE",response.raw().toString())
-                }
-
-
-            })
-
 
     }
 }

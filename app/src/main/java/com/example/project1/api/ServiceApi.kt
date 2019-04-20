@@ -15,6 +15,10 @@ interface ServiceApi {
     fun createUser(@Body user:HashMap<String, Any>
     ): Call<DefaultResponse>
 
+    @POST("auth/signIn")
+    fun logIn(@Body user:HashMap<String, Any>
+    ): Call<DefaultResponse>
+
     @GET("rest/restList")
     fun getRestaurant():Call<ArrayList<Restaurant>>
 
