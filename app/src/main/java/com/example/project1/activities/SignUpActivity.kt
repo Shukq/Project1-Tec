@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.example.project1.api.RetrofitClient
 import com.example.project1.R
 import com.example.project1.model.DefaultResponse
+import com.example.project1.model.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,8 +50,9 @@ class SignUpActivity : AppCompatActivity() {
     private fun createUser()
     {
         val email = txt_user?.text.toString().trim()
-        val password = txt_pass?.text.toString()
-
+        val password = txt_pass?.text.toString().trim()
+        Log.i("email",email)
+        Log.i("pass",password)
         if(email.isEmpty())
         {
             txt_user!!.error = "Email required"
@@ -63,16 +65,21 @@ class SignUpActivity : AppCompatActivity() {
             txt_pass!!.requestFocus()
             return
         }
+        val hash:HashMap<String,Any> = hashMapOf()
+        hash.set("email",email)
+        hash.set("password",password)
 
-        RetrofitClient.instance.createUser(email, password)
+        RetrofitClient.instance.createUser(hash)
             .enqueue(object: Callback<DefaultResponse>{
                 override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
-                    Toast.makeText(applicationContext,"fallo",Toast.LENGTH_LONG).show()
+                    Log.e("ERROR",t.message)
                 }
 
                 override fun onResponse(call: Call<DefaultResponse>, response: Response<DefaultResponse>) {
-                    Toast.makeText(applicationContext,response.toString(),Toast.LENGTH_LONG).show()
-                    Log.i("ERROR",response.toString())
+                    Log.i("Codigo",response.code().toString())
+                    Log.i("CALL",call.request().toString())
+                    Log.i("CALL2",call.request().body().toString())
+                    Log.i("RESPONSE",response.raw().toString())
                 }
 
 
