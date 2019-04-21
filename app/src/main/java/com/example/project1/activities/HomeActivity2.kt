@@ -12,14 +12,18 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import com.example.project1.fragments.FragmentAdapter
-import com.example.project1.fragments.ListFragment
-import com.example.project1.fragments.MapFragment
+import com.example.project1.adapters.FragmentAdapter
 import com.example.project1.R
+import com.example.project1.api.RetrofitClient
+import com.example.project1.dao.DbWorkerThread
+import com.example.project1.dao.RestaurantDatabase
+import com.example.project1.model.Restaurant
 import kotlinx.android.synthetic.main.activity_home2.*
 import kotlinx.android.synthetic.main.app_bar_home2.*
-
-
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.ArrayList
 
 
 class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +31,8 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     private var TAG:String = "MainActivity"
     private lateinit var mFragmentAdapter: FragmentAdapter
     private var email = ""
+    private lateinit var dbWorkerThread:DbWorkerThread
+    private var myDb:RestaurantDatabase?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +45,10 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         setupViewPager(viewPager)
         var tabLayout:TabLayout = findViewById(R.id.tabs)
         tabLayout.setupWithViewPager(viewPager)
+
+        dbWorkerThread = DbWorkerThread("dbWorkerThread")
+        dbWorkerThread.start()
+        myDb = RestaurantDatabase.getInstance(this)
 
 
         email = this.intent.getStringExtra("email")
@@ -55,8 +65,14 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
         nav_view.setNavigationItemSelectedListener(this)
+
+        refreshRepo()
+    }
+    override fun onDestroy() {
+        dbWorkerThread.quit()
+        RestaurantDatabase.destroyInstance()
+        super.onDestroy()
     }
 
     fun setupViewPager(viewPager:ViewPager)
@@ -65,6 +81,34 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         adapter.addFragment(ListFragment(),"Restaurant List")
         adapter.addFragment(MapFragment(),"Mapa")
         viewPager.adapter = adapter
+
+    }
+
+    fun refreshRepo()
+    {
+        var myDataset = ArrayList<Restaurant>()
+        RetrofitClient.instance.getRestaurant()
+            .enqueue(object: Callback<ArrayList<Restaurant>> {
+                override fun onFailure(call: Call<ArrayList<Restaurant>>, t: Throwable) {
+                    Log.e("ERROR",t.toString())
+                }
+
+                override fun onResponse(call: Call<ArrayList<Restaurant>>, response: Response<ArrayList<Restaurant>>) {
+
+                    if(response.body()!=null)
+                    {
+                        myDataset = response.body()!!
+                        val task = Runnable {
+                            myDb?.RestaurantDAO()?.deleteAll()
+                            myDb?.RestaurantDAO()?.saveList(myDataset)
+                        }
+                        dbWorkerThread.postTask(task)
+                    }
+
+                }
+
+
+            })
 
     }
 
@@ -107,10 +151,6 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        if(item.itemId==R.id.nav_exit)
-        {
-            Log.i("werwer","ewrew")
-        }
         when(item.itemId) {
 
             R.id.nav_exit -> {

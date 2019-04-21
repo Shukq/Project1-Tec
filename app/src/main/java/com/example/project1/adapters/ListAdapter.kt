@@ -1,4 +1,4 @@
-package com.example.project1.fragments
+package com.example.project1.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,15 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.project1.R
-import com.example.project1.Utils.ImageDownloader
 import com.example.project1.model.Restaurant
 import com.squareup.picasso.Picasso
-import java.util.ArrayList
 
 
 class ListAdapter// Provide a suitable constructor (depends on the kind of dataset)
-    (private val mDataset: ArrayList<Restaurant>, val callback: () -> Unit) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
-
+    (private val mDataset: List<Restaurant>, val callback: (Restaurant) -> Unit) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+    private var mRestaurants=mDataset
     class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         // each data item is just a string in this case
         var name: TextView
@@ -43,7 +41,7 @@ class ListAdapter// Provide a suitable constructor (depends on the kind of datas
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        val rest = mDataset[position]
+        val rest = mRestaurants[position]
         holder.name.text = rest.name
         holder.number.text = rest.contactInfo.toString() + ""
         if(rest.images.isNotEmpty())
@@ -59,12 +57,17 @@ class ListAdapter// Provide a suitable constructor (depends on the kind of datas
             holder.cost?.text = "$$"
         }
         holder.itemView.setOnClickListener {
-            callback()
+            callback(rest)
         }
     }
 
     override fun getItemCount(): Int {
-        return mDataset.size
+        return mRestaurants.size
 
+    }
+
+    fun setRestaurants(restaurants:List<Restaurant>){
+        mRestaurants = restaurants
+        notifyDataSetChanged()
     }
 }

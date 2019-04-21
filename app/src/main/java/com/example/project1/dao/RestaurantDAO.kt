@@ -22,5 +22,6 @@ abstract class RestaurantDAO {
     abstract fun deleteById(citizenIdDelete : String)
     @Update
     abstract fun update(restaurant: Restaurant)
-
+    @Query("SELECT * FROM Restaurant WHERE id = :idRest")
+    abstract fun getRest(idRest : String):Restaurant
 }
