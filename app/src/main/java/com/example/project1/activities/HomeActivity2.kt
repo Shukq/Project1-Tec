@@ -1,4 +1,4 @@
-package com.example.project1
+package com.example.project1.activities
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -8,15 +8,31 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
+import com.example.project1.adapters.FragmentAdapter
+import com.example.project1.R
+import com.example.project1.api.RetrofitClient
+import com.example.project1.dao.DbWorkerThread
+import com.example.project1.dao.RestaurantDatabase
+import com.example.project1.model.Restaurant
 import kotlinx.android.synthetic.main.activity_home2.*
 import kotlinx.android.synthetic.main.app_bar_home2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.ArrayList
+
 
 class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var viewPager:ViewPager
     private var TAG:String = "MainActivity"
     private lateinit var mFragmentAdapter: FragmentAdapter
+    private var email = ""
+    private lateinit var dbWorkerThread:DbWorkerThread
+    private var myDb:RestaurantDatabase?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,16 +46,33 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         var tabLayout:TabLayout = findViewById(R.id.tabs)
         tabLayout.setupWithViewPager(viewPager)
 
+        dbWorkerThread = DbWorkerThread("dbWorkerThread")
+        dbWorkerThread.start()
+        myDb = RestaurantDatabase.getInstance(this)
 
+
+        email = this.intent.getStringExtra("email")
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        val headerView = navigationView.getHeaderView(0)
+        val navUsername = headerView.findViewById(R.id.txt_email_nav) as TextView
+        navUsername.text = email
 
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar,
+            com.example.project1.R.string.navigation_drawer_open,
+            com.example.project1.R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
         nav_view.setNavigationItemSelectedListener(this)
+
+        refreshRepo()
+    }
+    override fun onDestroy() {
+        dbWorkerThread.quit()
+        RestaurantDatabase.destroyInstance()
+        super.onDestroy()
     }
 
     fun setupViewPager(viewPager:ViewPager)
@@ -48,6 +81,34 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         adapter.addFragment(ListFragment(),"Restaurant List")
         adapter.addFragment(MapFragment(),"Mapa")
         viewPager.adapter = adapter
+
+    }
+
+    fun refreshRepo()
+    {
+        var myDataset = ArrayList<Restaurant>()
+        RetrofitClient.instance.getRestaurant()
+            .enqueue(object: Callback<ArrayList<Restaurant>> {
+                override fun onFailure(call: Call<ArrayList<Restaurant>>, t: Throwable) {
+                    Log.e("ERROR",t.toString())
+                }
+
+                override fun onResponse(call: Call<ArrayList<Restaurant>>, response: Response<ArrayList<Restaurant>>) {
+
+                    if(response.body()!=null)
+                    {
+                        myDataset = response.body()!!
+                        val task = Runnable {
+                            myDb?.RestaurantDAO()?.deleteAll()
+                            myDb?.RestaurantDAO()?.saveList(myDataset)
+                        }
+                        dbWorkerThread.postTask(task)
+                    }
+
+                }
+
+
+            })
 
     }
 
@@ -90,10 +151,28 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        when (item.itemId) {
+        when(item.itemId) {
 
             R.id.nav_exit -> {
+                Log.e("HALP","HALP2")
+                val dialogBack = AlertDialog.Builder(this)
+                dialogBack.setTitle("Exit")
+                dialogBack.setMessage("Do you want to close session?")
+                dialogBack.setPositiveButton("Yes"){
+                        dialog,_ ->
+                    dialog.dismiss()
+                    finish()
+                    }
+                dialogBack.setNegativeButton("No"){
+                        dialog,_ ->
+                    dialog.dismiss()
+                }
+                val d = dialogBack.create()
+                d.show()
+            }
 
+            R.id.nav_add -> {
+                Log.e("TORUPLOX","STAHP")
             }
 
         }

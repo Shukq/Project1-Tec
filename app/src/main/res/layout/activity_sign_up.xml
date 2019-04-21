@@ -6,7 +6,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SignUpActivity">
+        tools:context=".activities.SignUpActivity">
 
     <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
                                                  android:layout_height="200dp"
@@ -48,7 +48,7 @@
             android:hint="Email"
             android:textColorHint="@android:color/white"
             android:layout_width="match_parent"
-            android:layout_height="61dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="40dp"
             android:id="@+id/textInputLayout"
@@ -60,7 +60,7 @@
                 android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:id="@+id/txt_user"/>
+                android:id="@+id/txt_SignUp_User"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -82,7 +82,7 @@
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:id="@+id/txt_pass"/>
+                android:id="@+id/txt_SignUp_Pass"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -95,7 +95,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="40dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="40dp" android:id="@+id/textInputLayout3" android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login" app:layout_constraintHorizontal_bias="0.0">
+            app:layout_constraintBottom_toTopOf="@+id/btn_signUp" app:layout_constraintHorizontal_bias="0.0">
 
         <EditText
                 android:textColor="@android:color/white"
@@ -111,7 +111,7 @@
             android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_login" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
+            android:id="@+id/btn_signUp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="40dp"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginBottom="20dp" app:layout_constraintBottom_toTopOf="@+id/button4"/>
