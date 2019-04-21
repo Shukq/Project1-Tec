@@ -1,12 +1,16 @@
 package com.example.project1.activities
 
+import android.opengl.Visibility
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.View
 import com.example.project1.R
+import com.example.project1.adapters.CommentAdapter
 import com.example.project1.adapters.ImageAdapter
 import com.example.project1.adapters.ListAdapter
 import com.example.project1.dao.DbWorkerThread
@@ -20,10 +24,17 @@ class RestaurantDetailsActivity : AppCompatActivity() {
     private lateinit var rest:Restaurant
     private lateinit var dbWorkerThread:DbWorkerThread
     private var myDb:RestaurantDatabase?= null
+
     private var recyclerView: RecyclerView? = null
     private var mAdapter: ImageAdapter? = null
     private var layoutManager: RecyclerView.LayoutManager?= null
     private lateinit var imgList:ArrayList<String>
+
+    private var recyclerComment: RecyclerView? = null
+    private var mAdapterComment: CommentAdapter? = null
+    private var layoutManagerComment: RecyclerView.LayoutManager?= null
+    private lateinit var commentList:ArrayList<String>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +48,19 @@ class RestaurantDetailsActivity : AppCompatActivity() {
         recyclerView!!.layoutManager = layoutManager
         mAdapter = ImageAdapter(imgList)
         recyclerView!!.adapter = mAdapter
+
+        commentList = arrayListOf()
+        recyclerComment = findViewById(R.id.recycler_restComments)
+        recyclerComment!!.setHasFixedSize(true)
+        layoutManagerComment = LinearLayoutManager(this)
+        recyclerComment!!.layoutManager = layoutManagerComment
+        val mDividerItemDecoration = DividerItemDecoration(
+            recyclerComment!!.context,
+            LinearLayoutManager.VERTICAL
+        )
+        recyclerComment!!.addItemDecoration(mDividerItemDecoration)
+        mAdapterComment = CommentAdapter(commentList)
+        recyclerComment!!.adapter = mAdapterComment
 
 
         idRest = this.intent.getStringExtra("idRest")
@@ -53,7 +77,9 @@ class RestaurantDetailsActivity : AppCompatActivity() {
             txt_restContact.text = "Contact info: " + rest.contactInfo
             txt_restXY.text = "Location: "+ rest.x + ":" + rest.y
             imgList = rest.images
+            commentList = rest.comments
             mAdapter?.setImages(imgList)
+            mAdapterComment?.setComments(commentList)
         }
         dbWorkerThread.postTask(task)
 
@@ -72,6 +98,13 @@ class RestaurantDetailsActivity : AppCompatActivity() {
         dbWorkerThread.quit()
         RestaurantDatabase.destroyInstance()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.details_activity, menu)
+
+        return true
     }
 
     fun getCost():String{

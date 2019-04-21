@@ -46,12 +46,12 @@ class MapFragment : Fragment() {
             googleMap!!.isMyLocationEnabled = true
 
             // For dropping a marker at a point on the Map
-            val sydney = LatLng(-34.0, 151.0)
-            googleMap!!.addMarker(MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"))
+            //val sydney = LatLng(-34.0, 151.0)
+            //googleMap!!.addMarker(MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"))
 
             // For zooming automatically to the location of the marker
-            val cameraPosition = CameraPosition.Builder().target(sydney).zoom(12f).build()
-            googleMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            //val cameraPosition = CameraPosition.Builder().target(sydney).zoom(12f).build()
+            //googleMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         }
 
         return rootView

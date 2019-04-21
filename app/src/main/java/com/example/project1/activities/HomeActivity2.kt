@@ -175,6 +175,8 @@ class HomeActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 Log.e("TORUPLOX","STAHP")
             }
 
+
+
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
