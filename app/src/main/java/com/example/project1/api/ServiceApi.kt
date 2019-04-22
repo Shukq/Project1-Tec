@@ -25,6 +25,12 @@ interface ServiceApi {
     @POST("rest/addRest")
     fun addRest():Call<Restaurant>
 
+    @POST("auth/sendCode")
+    fun forgotPass(@Body user:HashMap<String, Any>):Call<DefaultResponse>
+
+    @POST("auth/changePass")
+    fun updPass(@Body user:HashMap<String, Any>):Call<DefaultResponse>
+
     @GET("rest/restList")
     fun getRestaurant():Call<ArrayList<Restaurant>>
 

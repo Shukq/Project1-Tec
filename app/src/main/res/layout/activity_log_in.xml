@@ -17,7 +17,7 @@
                                                  app:layout_constraintTop_toTopOf="parent"
                                                  app:layout_constraintHorizontal_bias="0.0"
                                                  android:layout_marginBottom="8dp"
-                                                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout">
+                                                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout_confirmPass">
 
         <TextView
                 android:text="Restaurant App"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="40dp"
-            android:id="@+id/textInputLayout" android:layout_marginBottom="8dp"
+            android:id="@+id/textInputLayout_confirmPass" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout3">
 
         <EditText
@@ -70,7 +70,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="40dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="40dp" android:id="@+id/textInputLayout3" android:layout_marginBottom="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_signUp">
+            app:layout_constraintBottom_toTopOf="@+id/btn_resetPass">
 
         <EditText
                 android:textColor="@android:color/white"
@@ -86,7 +86,7 @@
             android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_signUp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
+            android:id="@+id/btn_resetPass" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="40dp"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginBottom="24dp" app:layout_constraintBottom_toTopOf="@+id/button4"/>
@@ -101,14 +101,14 @@
             android:id="@+id/button4" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="40dp"
             app:layout_constraintHorizontal_bias="0.498"
-            android:layout_marginBottom="24dp" app:layout_constraintBottom_toTopOf="@+id/textView3"/>
+            android:layout_marginBottom="24dp" app:layout_constraintBottom_toTopOf="@+id/txt_passChange"/>
 
     <TextView
             android:textColor="@android:color/white"
             android:text="Forgot your password?"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3" android:layout_marginBottom="50dp"
+            android:id="@+id/txt_passChange" android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="40dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
             app:layout_constraintHorizontal_bias="0.095"/>
