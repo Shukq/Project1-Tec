@@ -3,9 +3,7 @@ package com.example.project1.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PatternMatcher
 import android.text.Editable
-import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
@@ -13,12 +11,10 @@ import android.widget.Toast
 import com.example.project1.api.RetrofitClient
 import com.example.project1.R
 import com.example.project1.model.DefaultResponse
-import com.example.project1.model.User
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
     private  var btn_register : Button?= null
@@ -30,7 +26,7 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-        btn_register = findViewById(R.id.btn_signUp)
+        btn_register = findViewById(R.id.btn_resetPass)
         txt_pass = findViewById(R.id.txt_SignUp_Pass)
         txt_user = findViewById(R.id.txt_SignUp_User)
         txt_confirm = findViewById(R.id.txt_pass_confirmation)

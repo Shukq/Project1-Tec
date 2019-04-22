@@ -38,6 +38,13 @@
         >
             <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintHorizontal_bias="0.0" android:id="@+id/recycler_restComments"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/editTxt_Comment_Layout"/>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
@@ -120,6 +127,42 @@
                     android:id="@+id/img_restLogo" android:layout_marginTop="8dp"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"/>
+            <TextView
+                    android:text="Comment Section:"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_labelComent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/recicler_restImages"/>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_labelComent"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:id="@+id/editTxt_Comment_Layout"
+                    app:boxBackgroundColor="@android:color/transparent">
+
+                <EditText
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Write your comment" android:id="@+id/editTxt_Comment" android:textSize="14sp"/>
+            </android.support.design.widget.TextInputLayout>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_comment_black_24dp"
+                    android:id="@+id/btn_addComment" app:layout_constraintStart_toEndOf="@+id/editTxt_Comment_Layout"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_labelComent"
+                    app:layout_constraintHorizontal_bias="0.06"
+                    app:layout_constraintVertical_bias="0.5"
+                    android:background="@android:color/transparent"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/recycler_restComments"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
