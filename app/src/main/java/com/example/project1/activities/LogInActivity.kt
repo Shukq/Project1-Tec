@@ -87,16 +87,19 @@ class LogInActivity : AppCompatActivity() {
         val hash:HashMap<String,Any> = hashMapOf()
         hash.set("email",email)
         hash.set("password",password)
+        btn_login?.isEnabled = false
 
         RetrofitClient.instance.logIn(hash)
             .enqueue(object: Callback<DefaultResponse> {
                 override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+                    btn_login?.isEnabled = true
                     Toast.makeText(this@LogInActivity,"Server error!",Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<DefaultResponse>, response: Response<DefaultResponse>) {
                     if(response.isSuccessful)
                     {
+                        btn_login?.isEnabled = true
                         Toast.makeText(this@LogInActivity,"Login successful!",Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@LogInActivity, HomeActivity2::class.java)
                         intent.putExtra("email",email)
@@ -105,6 +108,7 @@ class LogInActivity : AppCompatActivity() {
                     }
                     else
                     {
+                        btn_login?.isEnabled = true
                         Toast.makeText(this@LogInActivity,"User dont exist!",Toast.LENGTH_SHORT).show()
                         txt_user?.text = Editable.Factory.getInstance().newEditable("")
                         txt_pass?.text = Editable.Factory.getInstance().newEditable("")

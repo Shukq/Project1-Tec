@@ -10,4 +10,5 @@
     <color name="secondaryTextColor">#000000</color>
     <color name="fbColor">#506ba2</color>
     <color name="logInColor">#7172ce</color>
+    <color name="apptheme_color">#33b5e5</color>
 </resources>

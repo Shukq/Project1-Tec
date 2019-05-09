@@ -2,6 +2,7 @@ package com.example.project1.dao
 
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 
 class DbWorkerThread(threadName: String) : HandlerThread(threadName) {
 
@@ -13,7 +14,14 @@ class DbWorkerThread(threadName: String) : HandlerThread(threadName) {
     }
 
     fun postTask(task: Runnable) {
-        mWorkerHandler.post(task)
+        if(mWorkerHandler!=null){
+            mWorkerHandler.post(task)
+        }else{
+            Log.e("Error", "Handle error")
+            mWorkerHandler = Handler(looper)
+            mWorkerHandler.post(task)
+        }
+
     }
 
 }

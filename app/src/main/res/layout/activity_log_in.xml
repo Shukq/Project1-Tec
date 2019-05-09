@@ -80,7 +80,7 @@
                 android:id="@+id/txt_pass" android:text="123"/>
     </android.support.design.widget.TextInputLayout>
     <Button
-            android:background="@drawable/button_log_in"
+            android:background="@drawable/btn_state"
             android:text="Sign In"
             android:textSize="16sp"
             android:textColor="@android:color/white"

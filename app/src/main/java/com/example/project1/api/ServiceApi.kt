@@ -20,16 +20,25 @@ interface ServiceApi {
     ): Call<DefaultResponse>
 
     @POST("rest/addImg")//convertir imagen con base64
-    fun addImage():Call<DefaultResponse>
+    fun addImage(@Body user:HashMap<String, Any>):Call<DefaultResponse>
 
     @POST("rest/addRest")
-    fun addRest():Call<Restaurant>
+    fun addRest(@Body user:HashMap<String, Any>):Call<DefaultResponse>
+
+    @POST("rest/addScore")
+    fun addScore(@Body user:HashMap<String, Any>):Call<DefaultResponse>
+
+    @POST("rest/addComm")
+    fun addComment(@Body user:HashMap<String, Any>):Call<DefaultResponse>
 
     @POST("auth/sendCode")
     fun forgotPass(@Body user:HashMap<String, Any>):Call<DefaultResponse>
 
     @POST("auth/changePass")
     fun updPass(@Body user:HashMap<String, Any>):Call<DefaultResponse>
+
+    @POST("auth/signOut")
+    fun signOut(@Body user:HashMap<String, Any>):Call<DefaultResponse>
 
     @GET("rest/restList")
     fun getRestaurant():Call<ArrayList<Restaurant>>

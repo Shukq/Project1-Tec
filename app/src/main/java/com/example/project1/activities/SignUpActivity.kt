@@ -46,6 +46,7 @@ class SignUpActivity : AppCompatActivity() {
         val confirm = txt_pass_confirmation?.text.toString()
         if(email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.isNotEmpty()&& password == confirm)
         {
+            btn_register?.isEnabled = false
             val hash:HashMap<String,Any> = hashMapOf()
             hash.set("email",email)
             hash.set("password",password)
@@ -53,12 +54,14 @@ class SignUpActivity : AppCompatActivity() {
             RetrofitClient.instance.createUser(hash)
                 .enqueue(object: Callback<DefaultResponse>{
                     override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+                        btn_register?.isEnabled = true
                         Toast.makeText(this@SignUpActivity,"User not created",Toast.LENGTH_LONG).show()
                     }
 
                     override fun onResponse(call: Call<DefaultResponse>, response: Response<DefaultResponse>) {
                         if(response.isSuccessful)
                         {
+                            btn_register?.isEnabled = true
                             Toast.makeText(this@SignUpActivity,"User created",Toast.LENGTH_LONG).show()
                             val intent = Intent(this@SignUpActivity, MainActivity::class.java)
                             startActivity(intent)
@@ -66,6 +69,7 @@ class SignUpActivity : AppCompatActivity() {
                         }
                         else
                         {
+                            btn_register?.isEnabled = true
                             Toast.makeText(this@SignUpActivity,"User already exists!",Toast.LENGTH_LONG).show()
                             txt_user?.text = Editable.Factory.getInstance().newEditable("")
                             txt_pass?.text = Editable.Factory.getInstance().newEditable("")

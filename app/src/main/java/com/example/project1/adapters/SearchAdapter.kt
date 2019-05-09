@@ -1,7 +1,6 @@
 package com.example.project1.adapters
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,8 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 
 
-class ListAdapter// Provide a suitable constructor (depends on the kind of dataset)
-    (private val mDataset: List<Restaurant>, val callback: (Restaurant) -> Unit) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class SearchAdapter// Provide a suitable constructor (depends on the kind of dataset)
+    (private val mDataset: List<Restaurant>, val callback: (Restaurant) -> Unit) : RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
     private var mRestaurants=mDataset
     class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         // each data item is just a string in this case
@@ -55,7 +54,7 @@ class ListAdapter// Provide a suitable constructor (depends on the kind of datas
         }
         if(rest.cost==0)
         {
-           holder.cost?.text = "$"
+            holder.cost?.text = "$"
         }
         if(rest.cost==1)
         {
@@ -65,7 +64,6 @@ class ListAdapter// Provide a suitable constructor (depends on the kind of datas
         {
             holder.cost?.text = "$$$"
         }
-
         holder.itemView.setOnClickListener {
             callback(rest)
         }

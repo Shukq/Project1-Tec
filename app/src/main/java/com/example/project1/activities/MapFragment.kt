@@ -8,6 +8,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat.startActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +39,7 @@ class MapFragment : Fragment() {
     lateinit var mMapView: MapView
     private var googleMap: GoogleMap? = null
     private lateinit var viewModel:RestaurantViewModel
+    private var restListGlobal:List<Restaurant> = mutableListOf()
 
     @SuppressLint("MissingPermission")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,6 +69,7 @@ class MapFragment : Fragment() {
 
             viewModel = ViewModelProviders.of(this, MyViewModelFactory(activity!!)).get(RestaurantViewModel::class.java)
             viewModel.getRestaurant().observe(this, Observer {
+                restListGlobal = it?: emptyList()
                 showMarkers(it?: emptyList())
             })
 
@@ -95,23 +99,41 @@ class MapFragment : Fragment() {
         mMapView.onLowMemory()
     }
 
-    fun onInfoWindowClick() {
 
-    }
 
     fun showMarkers(mapList:List<Restaurant>){
         for (rest in mapList) {
             //var snippet = rest.food + "\n" +rest.schedule + "\n" +rest.contactInfo
-            var myLocation = LatLng(rest.x.toDouble(),rest.y.toDouble())
-            googleMap!!.addMarker(MarkerOptions().position(myLocation).title(rest.name))
-            googleMap?.setOnInfoWindowClickListener {
-                val intent = Intent(activity, RestaurantDetailsActivity::class.java)
-                intent.putExtra("idRest", rest.id)
-                startActivity(intent)
+            Log.e("restId",rest.id)
+            var location = LatLng(rest.x.toDouble(),rest.y.toDouble())
+            googleMap!!.addMarker(MarkerOptions().position(location).title(rest.name))
+            googleMap?.setOnInfoWindowClickListener(object:GoogleMap.OnInfoWindowClickListener{
+                override fun onInfoWindowClick(p0: Marker?) {
+                    var x = p0?.position?.latitude
+                    var y = p0?.position?.longitude
+                    for(rest in restListGlobal)
+                    {
+                        if(x == rest.x.toDouble() && y == rest.y.toDouble())
+                        {
+                            val intent = Intent(activity, RestaurantDetailsActivity::class.java)
+                            intent.putExtra("idRest", rest.id)
+                            Log.e("restId",rest.id)
+                            startActivity(intent)
+                        }
+                    }
+                }
+            })
             }
         }
 
+
+
+
+
+
+
+
+    companion object {
+        private val TAG = "Mapa"
     }
-
-
 }

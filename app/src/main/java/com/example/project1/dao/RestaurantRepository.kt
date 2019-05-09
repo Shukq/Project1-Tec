@@ -32,6 +32,11 @@ class RestaurantRepository  {
         return restaurantDAO!!.load()
     }
 
+    fun getRest(id : String): Restaurant{
+        return restaurantDAO?.getRest(id)!!
+    }
+
+
 
     private fun refreshRestaurant(){
 

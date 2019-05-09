@@ -36,6 +36,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
         >
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_star_border_black_24dp"
+                    android:id="@+id/img_rating5"
+                    android:layout_marginBottom="80dp"
+                    app:layout_constraintBottom_toTopOf="@+id/recicler_restImages"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_star_border_black_24dp"
+                    android:id="@+id/img_rating4" app:layout_constraintEnd_toStartOf="@+id/img_rating5"
+                    android:layout_marginBottom="80dp" app:layout_constraintBottom_toTopOf="@+id/recicler_restImages"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_star_border_black_24dp"
+                    android:id="@+id/img_rating3" app:layout_constraintEnd_toStartOf="@+id/img_rating4"
+                    android:layout_marginBottom="80dp" app:layout_constraintBottom_toTopOf="@+id/recicler_restImages"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_star_border_black_24dp"
+                    android:id="@+id/img_rating2" app:layout_constraintEnd_toStartOf="@+id/img_rating3"
+                    android:layout_marginBottom="80dp" app:layout_constraintBottom_toTopOf="@+id/recicler_restImages"/>
             <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -163,6 +185,12 @@
                     app:layout_constraintVertical_bias="0.5"
                     android:background="@android:color/transparent"
                     android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/recycler_restComments"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/ic_star_border_black_24dp"
+                    android:id="@+id/img_rating1" app:layout_constraintEnd_toStartOf="@+id/img_rating2"
+                    android:layout_marginBottom="80dp" app:layout_constraintBottom_toTopOf="@+id/recicler_restImages"
+            />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

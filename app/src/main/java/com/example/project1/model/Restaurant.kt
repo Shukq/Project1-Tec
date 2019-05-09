@@ -19,3 +19,23 @@ data class Restaurant (
     val id:String,
     var name:String
     )
+{
+    fun setAvg():Int{
+        var avg = 0
+        if(this.score.isNotEmpty())
+        {
+            for (i in this.score)
+            {
+                avg += i.toInt()
+            }
+            avg = avg.div(this.score.size)
+            return avg
+        }
+        else
+        {
+            return 0
+        }
+
+    }
+}
+
