@@ -28,6 +28,10 @@ import kotlinx.android.synthetic.main.activity_restaurant_details.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.app.Activity
+import android.os.AsyncTask
+
+
 
 class RestaurantDetailsActivity : AppCompatActivity() {
     private var idRest = ""
@@ -94,6 +98,11 @@ class RestaurantDetailsActivity : AppCompatActivity() {
         //////
 
         myDb = RestaurantDatabase.getInstance(this)
+
+
+        rest = AgentAsyncTask(idRest,myDb!!).execute().get()
+        setElements()
+        /*
         val task = Runnable {
             rest = myDb?.RestaurantDAO()?.getRest(idRest)!!
             txt_restName.text = rest.name
@@ -109,6 +118,7 @@ class RestaurantDetailsActivity : AppCompatActivity() {
             mAdapterComment?.setComments(commentList)
         }
         dbWorkerThread.postTask(task)
+        */
 
         btnComment = findViewById(R.id.btn_addComment)
         btnComment.setOnClickListener {
@@ -344,6 +354,42 @@ class RestaurantDetailsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
+    }
+
+    fun setElements(){
+        txt_restName.text = rest.name
+        txt_restType.text = "Type of food: " + rest.food
+        txt_restCost.text = "Cost: " + getCost()
+        txt_restScore.text = getAvg()
+        txt_restSchedule.text = "Open on: " + rest.schedule
+        txt_restContact.text = "Contact info: " + rest.contactInfo
+        txt_restXY.text = "Location: "+ rest.x + ":" + rest.y
+        imgList = rest.images
+        commentList = rest.comments
+        mAdapter?.setImages(imgList)
+        mAdapterComment?.setComments(commentList)
+    }
+
+    private class AgentAsyncTask(private val id: String,val myDb:RestaurantDatabase) : AsyncTask<Void, Void, Restaurant>() {
+        override fun doInBackground(vararg params: Void?): Restaurant {
+            return myDb.RestaurantDAO().getRest(id)
+        }
+        /*
+        override fun doInBackground(vararg params: Void): Void {
+            rest = myDb?.RestaurantDAO()?.getRest(idRest)!!
+        }
+
+        override fun onPostExecute(agentsCount: Int?) {
+            val activity = weakActivity.get() ?: return
+
+            if (agentsCount > 0) {
+                //2: If it already exists then prompt user
+                Toast.makeText(activity, "Agent already exists!", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(activity, "Agent does not exist! Hurray :)", Toast.LENGTH_LONG).show()
+                activity.onBackPressed()
+            }
+        }*/
     }
 
 
